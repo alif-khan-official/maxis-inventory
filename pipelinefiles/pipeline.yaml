@@ -1,0 +1,16 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "maxisservice-core-frontend-pipeline"
+spec:
+  source:
+    git:
+      ref: main
+      uri: 'https://github.com/Maxis-System-Limited/maxisservice-core-frontend.git'
+    sourceSecret:
+      name: maxisservice-secret
+    type: Git
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfilePath: jenkins/jenkinsFile
+    type: JenkinsPipeline

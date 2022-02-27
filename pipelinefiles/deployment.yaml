@@ -1,0 +1,47 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: maxisservice-core-frontend-deployment-config
+  name: maxisservice-core-frontend-deployment-config
+  namespace: maxisservice-core-frontend
+spec:
+  replicas: 1
+  selector:
+
+    app: maxisservice-core-frontend-deployment-config
+    deploymentconfig: maxisservice-core-frontend-deployment-config
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: maxisservice-core-frontend-deployment-config
+        deploymentconfig: maxisservice-core-frontend-deployment-config
+    spec:
+      containers:
+        - image: docker-registry.default.svc:5000/maxisservice-core-frontend/maxisservice-core-frontend
+          imagePullPolicy: Always
+          name: maxisservice-core-frontend-deployment-config
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - maxisservice-core-frontend
+        from:
+          kind: ImageStreamTag
+          name: 'maxisservice-core-frontend:latest'
+          namespace: maxisservice-core-frontend
+      type: ImageChange

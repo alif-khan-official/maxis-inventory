@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    build: maxisservice-core-frontend-build-config
+  name: maxisservice-core-frontend-build-config
+  namespace: maxisservice-core-frontend
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'maxisservice-core-frontend:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    type: Binary
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+    type: Docker

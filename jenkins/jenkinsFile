@@ -1,0 +1,39 @@
+pipeline{
+  agent { label 'nodejs' }
+  stages{
+    stage ('Checkout'){
+      steps{
+        checkout scm
+      }
+  }
+    stage ('Unit Test') {
+      steps{
+      echo 'Unit test completed.'       
+      }
+    }
+    
+   stage ('Static Analysis') {       
+     steps{      
+       echo 'Static analysis completed.'
+    }
+  }
+    stage ('Build') {
+      steps{
+      sh "npm install"   
+      }
+    }
+    stage ('Build Image') {
+      steps{
+      sh '''
+          oc start-build maxisservice-core-frontend-build-config --from-dir=. --follow
+        '''
+      }
+    }    
+   
+    stage ('Integration Test') {       
+     steps{      
+       echo 'integration test completed.'
+    }
+  }
+  }
+}

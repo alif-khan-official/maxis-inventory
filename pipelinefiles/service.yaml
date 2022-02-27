@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: maxisservice-core-frontend
+  name: maxisservice-core-frontend-service
+  namespace: maxisservice-core-frontend
+spec:
+  ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    deploymentconfig: maxisservice-core-frontend-deployment-config
+  type: ClusterIP

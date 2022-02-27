@@ -1,0 +1,7 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    build: maxisservice-core-frontend-build-config
+  name: maxisservice-core-frontend
+  namespace: maxisservice-core-frontend
